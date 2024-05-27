@@ -286,4 +286,21 @@ export const upsertAgency = async (agency: Agency, price?: Plan) => {
   }
 }
 
-
+export const getNotificationAndUser = async (agencyId: string) => {
+  try {
+    const response = await db.notification.findMany({
+      where: {
+        id: agencyId
+      },
+      include: {
+        User: true
+      },
+      orderBy: {
+        createdAt: 'desc'
+      },
+    })
+    return response;
+  } catch (e) {
+    console.log(e)
+  }
+}
