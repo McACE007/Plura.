@@ -28,7 +28,7 @@ export default async function layout({ children, params }: Props) {
   if (notifications) allNoti = notifications
 
   return (
-    <div className="h-screen overflow-hidden">
+    <div className="h-screen">
       <Sidebar
         id={params.agencyId}
         type="agency"

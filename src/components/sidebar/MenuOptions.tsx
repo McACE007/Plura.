@@ -71,7 +71,7 @@ export default function MenuOptions({ user, id, details, defaultOpen, sidebarOpt
                 <ChevronsUpDown size={16} className='text-muted-foreground' />
               </Button>
             </PopoverTrigger>
-            <PopoverContent className='size-80 mt-4 z-[200] '>
+            <PopoverContent className='size-80 mt-4 z-[200]'>
               <Command className='rounded-lg'>
                 <CommandInput placeholder='Search Account...' />
                 <CommandList className='pb-16'>
@@ -160,10 +160,12 @@ export default function MenuOptions({ user, id, details, defaultOpen, sidebarOpt
 
                     return (
                       <CommandItem key={sidebarOption.id} className='md:w-[320px] w-full'>
-                        <Link href={sidebarOption.link} className='flex items-center gap-2 hover:bg-transparent rounded-md transition-all md:w-full w-[320px]'>
-                          {val}
-                          {sidebarOption.name}
-                        </Link>
+                        <SheetClose asChild>
+                          <Link href={sidebarOption.link} className='flex items-center gap-2 hover:bg-transparent rounded-md transition-all md:w-full w-[320px]'>
+                            {val}
+                            {sidebarOption.name}
+                          </Link>
+                        </SheetClose>
                       </CommandItem>
                     );
                   })}
