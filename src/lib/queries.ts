@@ -433,3 +433,12 @@ export const changeUserPermissions = async (
     console.log('ERROR: Could not change persmission', error)
   }
 }
+
+export const getSubaccountDetails = async (subaccountId: string) => {
+  const response = await db.subAccount.findUnique({
+    where: {
+      id: subaccountId,
+    },
+  })
+  return response
+}
