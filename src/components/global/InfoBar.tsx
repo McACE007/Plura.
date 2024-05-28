@@ -9,6 +9,7 @@ import { Role } from "@prisma/client";
 import { Card } from "../ui/card";
 import { Switch } from "../ui/switch";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
+import { ModeToggle } from "./mode-toggle";
 
 type Props = {
   notifications: NotificationWithUser | [];
@@ -40,7 +41,7 @@ export default function InfoBar({ notifications, subAccountId, className, role }
           <UserButton afterSignOutUrl="/" />
           <Sheet>
             <SheetTrigger asChild>
-              <div className="rounded-full size-8 bg-primary flex items-center justify-center text-white">
+              <div className="rounded-full size-9 bg-primary flex items-center justify-center text-white">
                 <Bell size={17} />
               </div>
             </SheetTrigger>
@@ -93,6 +94,7 @@ export default function InfoBar({ notifications, subAccountId, className, role }
 
             </SheetContent>
           </Sheet>
+          <ModeToggle />
         </div>
       </div>
     </>
