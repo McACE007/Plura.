@@ -462,3 +462,13 @@ export const deleteUser = async (userId: string) => {
 
   return deletedUser
 }
+
+export const getUser = async (id: string) => {
+  const user = await db.user.findUnique({
+    where: {
+      id,
+    },
+  })
+
+  return user
+}
