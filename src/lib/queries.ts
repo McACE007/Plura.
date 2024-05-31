@@ -527,3 +527,21 @@ export const deleteMedia = async (mediaId: string) => {
   })
   return response;
 }
+
+export const getLanesWithTicketAndTags = async (pipelineId: string) => {
+  const response = await db.lane.findMany({
+    where: { pipelineId },
+    orderBy: { order: 'asc' },
+    include: {
+      Tickets: {
+        orderBy: { order: 'asc' },
+        include: {
+          Tags: true,
+          Assigned: true,
+          Customer: true,
+        }
+      }
+    }
+  })
+  return response;
+}
