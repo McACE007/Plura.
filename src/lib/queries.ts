@@ -498,3 +498,11 @@ export const sendInvitation = async (
 
   return resposne
 }
+
+export const getMedia = async (subaccountId: string) => {
+  const mediaFiles = await db.subAccount.findUnique({
+    where: { id: subaccountId },
+    include: { Media: true }
+  })
+  return mediaFiles;
+}
