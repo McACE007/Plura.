@@ -3,7 +3,7 @@
 import { currentUser } from "@clerk/nextjs/server";
 import { db } from "./db";
 import { redirect } from "next/navigation";
-import { Agency, Plan, Role, SubAccount, User } from "@prisma/client";
+import { Agency, Plan, Prisma, Role, SubAccount, User } from "@prisma/client";
 import { clerkClient } from "@clerk/nextjs";
 import { v4 } from "uuid"
 import { CreateMediaType } from "./types";
@@ -552,3 +552,16 @@ export const getLanesWithTicketAndTags = async (pipelineId: string) => {
   })
   return response;
 }
+
+export const upsertPipeline = async (
+  pipeline: Prisma.PipelineUncheckedCreateWithoutLaneInput
+) => {
+  const response = await db.pipeline.upsert({
+    where: { id: pipeline.id },
+    update: pipeline,
+    create: pipeline,
+  })
+
+  return response
+}
+
