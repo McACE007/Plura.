@@ -508,12 +508,21 @@ export const getMedia = async (subaccountId: string) => {
   return mediaFiles;
 }
 
-export const createMedia = async (subaccountId: string, mediaFile: CreateMediaType){
+export const createMedia = async (subaccountId: string, mediaFile: CreateMediaType) => {
   const response = await db.media.create({
     data: {
       link: mediaFile.link,
       name: mediaFile.name,
       subAccountId: subaccountId,
+    }
+  })
+  return response;
+}
+
+export const deleteMedia = async (mediaId: string) => {
+  const response = await db.media.delete({
+    where: {
+      id: mediaId,
     }
   })
   return response;
