@@ -642,3 +642,15 @@ export const deleteLane = async (laneId: string) => {
   const resposne = await db.lane.delete({ where: { id: laneId } })
   return resposne
 }
+
+export const getTicketsWithTags = async (pipelineId: string) => {
+  const response = await db.ticket.findMany({
+    where: {
+      Lane: {
+        pipelineId,
+      },
+    },
+    include: { Tags: true, Assigned: true, Customer: true },
+  })
+  return response
+}
