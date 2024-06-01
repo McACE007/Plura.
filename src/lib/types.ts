@@ -62,3 +62,7 @@ export type PipelineDetailsWithLanesCardsTagsTickets = Prisma.PromiseReturnType<
 >
 
 export type TicketWithTags = Prisma.PromiseReturnType<typeof getTicketsWithTags>
+
+export type TicketDetails = Prisma.PromiseReturnType<
+  typeof _getTicketsWithAllRelations
+>
