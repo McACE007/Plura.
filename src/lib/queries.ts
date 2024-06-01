@@ -755,3 +755,8 @@ export const upsertTag = async (
 
   return response
 }
+
+export const deleteTag = async (tagId: string) => {
+  const response = await db.tag.delete({ where: { id: tagId } })
+  return response
+}
