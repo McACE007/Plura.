@@ -25,8 +25,6 @@ export default async function PipelinePage({ params }: Props) {
 
   const lanes = (await getLanesWithTicketAndTags(params.pipelineId)) as LaneDetail[]
 
-  // if(!lanes)
-
   return (
     <Tabs className="w-full" defaultValue="view">
       <TabsList className="bg-transparent border-b-2 h-16 w-full justify-between mb-4">
@@ -52,7 +50,6 @@ export default async function PipelinePage({ params }: Props) {
           updateTicketsOrder={updateTicketsOrder}
         />
       </TabsContent>
-
 
       <TabsContent value="settings">
         <PipelineSettings pipelineId={params.pipelineId} subaccountId={params.subaccountId} pipelines={pipelines} />
