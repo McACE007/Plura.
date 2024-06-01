@@ -760,3 +760,11 @@ export const deleteTag = async (tagId: string) => {
   const response = await db.tag.delete({ where: { id: tagId } })
   return response
 }
+
+export const getTagsForSubaccount = async (subaccountId: string) => {
+  const response = await db.subAccount.findUnique({
+    where: { id: subaccountId },
+    select: { Tags: true },
+  })
+  return response
+}
