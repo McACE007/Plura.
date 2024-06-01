@@ -1,5 +1,5 @@
 import { Contact, Lane, Notification, Prisma, Role, Tag, Ticket, User } from "@prisma/client"
-import { getAuthUserDetails, getMedia, getPipelineDetails, getTicketsWithTags, getUserPermissions } from "./queries"
+import { _getTicketsWithAllRelations, getAuthUserDetails, getMedia, getPipelineDetails, getTicketsWithTags, getUserPermissions } from "./queries"
 import { db } from "./db"
 
 export type NotificationWithUser =
@@ -66,3 +66,5 @@ export type TicketWithTags = Prisma.PromiseReturnType<typeof getTicketsWithTags>
 export type TicketDetails = Prisma.PromiseReturnType<
   typeof _getTicketsWithAllRelations
 >
+
+const currencyNumberRegex = /^\d+(\.\d{1,2})?$/
