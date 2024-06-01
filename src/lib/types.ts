@@ -1,5 +1,5 @@
 import { Contact, Lane, Notification, Prisma, Role, Tag, Ticket, User } from "@prisma/client"
-import { getAuthUserDetails, getMedia, getPipelineDetails, getUserPermissions } from "./queries"
+import { getAuthUserDetails, getMedia, getPipelineDetails, getTicketsWithTags, getUserPermissions } from "./queries"
 import { db } from "./db"
 
 export type NotificationWithUser =
@@ -60,3 +60,5 @@ export type LaneDetail = Lane & {
 export type PipelineDetailsWithLanesCardsTagsTickets = Prisma.PromiseReturnType<
   typeof getPipelineDetails
 >
+
+export type TicketWithTags = Prisma.PromiseReturnType<typeof getTicketsWithTags>
