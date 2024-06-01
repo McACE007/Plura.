@@ -654,3 +654,16 @@ export const getTicketsWithTags = async (pipelineId: string) => {
   })
   return response
 }
+
+export const _getTicketsWithAllRelations = async (laneId: string) => {
+  const response = await db.ticket.findMany({
+    where: { laneId: laneId },
+    include: {
+      Assigned: true,
+      Customer: true,
+      Lane: true,
+      Tags: true,
+    },
+  })
+  return response
+}
