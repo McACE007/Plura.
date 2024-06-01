@@ -557,7 +557,7 @@ export const upsertPipeline = async (
   pipeline: Prisma.PipelineUncheckedCreateWithoutLaneInput
 ) => {
   const response = await db.pipeline.upsert({
-    where: { id: pipeline.id },
+    where: { id: pipeline.id || v4() },
     update: pipeline,
     create: pipeline,
   })
@@ -630,7 +630,7 @@ export const upsertLane = async (lane: Prisma.LaneUncheckedCreateInput) => {
   }
 
   const response = await db.lane.upsert({
-    where: { id: lane.id },
+    where: { id: lane.id || v4() },
     update: lane,
     create: { ...lane, order },
   })
@@ -718,7 +718,7 @@ export const upsertTicket = async (
 
   const response = await db.ticket.upsert({
     where: {
-      id: ticket.id,
+      id: ticket.id || v4(),
     },
     update: { ...ticket, Tags: { set: tags } },
     create: { ...ticket, Tags: { connect: tags }, order },
@@ -727,6 +727,16 @@ export const upsertTicket = async (
       Customer: true,
       Tags: true,
       Lane: true,
+    },
+  })
+
+  return response
+}
+
+export const deleteTicket = async (ticketId: string) => {
+  const response = await db.ticket.delete({
+    where: {
+      id: ticketId,
     },
   })
 
