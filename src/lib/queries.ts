@@ -742,3 +742,16 @@ export const deleteTicket = async (ticketId: string) => {
 
   return response
 }
+
+export const upsertTag = async (
+  subaccountId: string,
+  tag: Prisma.TagUncheckedCreateInput
+) => {
+  const response = await db.tag.upsert({
+    where: { id: tag.id || v4(), subAccountId: subaccountId },
+    update: tag,
+    create: { ...tag, subAccountId: subaccountId },
+  })
+
+  return response
+}
