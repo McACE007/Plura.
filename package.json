@@ -42,6 +42,7 @@
     "@radix-ui/react-tooltip": "^1.0.7",
     "@tanstack/react-table": "^8.17.3",
     "@tremor/react": "^3.17.2",
+    "@types/react-beautiful-dnd": "^13.1.8",
     "@types/uuid": "^9.0.8",
     "@uploadthing/react": "^6.4.1",
     "class-variance-authority": "^0.7.0",
