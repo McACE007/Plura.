@@ -630,7 +630,7 @@ export const upsertLane = async (lane: Prisma.LaneUncheckedCreateInput) => {
   }
 
   const response = await db.lane.upsert({
-    where: { id: lane.id || v4() },
+    where: { id: lane.id },
     update: lane,
     create: { ...lane, order },
   })
