@@ -3,7 +3,7 @@
 import { currentUser } from "@clerk/nextjs/server";
 import { db } from "./db";
 import { redirect } from "next/navigation";
-import { Agency, Lane, Plan, Prisma, Role, SubAccount, Ticket, User } from "@prisma/client";
+import { Agency, Lane, Plan, Prisma, Role, SubAccount, Tag, Ticket, User } from "@prisma/client";
 import { clerkClient } from "@clerk/nextjs";
 import { v4 } from "uuid"
 import { CreateMediaType } from "./types";
@@ -699,5 +699,36 @@ export const searchContacts = async (searchTerms: string) => {
       },
     },
   })
+  return response
+}
+
+export const upsertTicket = async (
+  ticket: Prisma.TicketUncheckedCreateInput,
+  tags: Tag[]
+) => {
+  let order: number
+  if (!ticket.order) {
+    const tickets = await db.ticket.findMany({
+      where: { laneId: ticket.laneId },
+    })
+    order = tickets.length
+  } else {
+    order = ticket.order
+  }
+
+  const response = await db.ticket.upsert({
+    where: {
+      id: ticket.id,
+    },
+    update: { ...ticket, Tags: { set: tags } },
+    create: { ...ticket, Tags: { connect: tags }, order },
+    include: {
+      Assigned: true,
+      Customer: true,
+      Tags: true,
+      Lane: true,
+    },
+  })
+
   return response
 }
