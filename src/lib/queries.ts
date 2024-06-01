@@ -3,7 +3,7 @@
 import { currentUser } from "@clerk/nextjs/server";
 import { db } from "./db";
 import { redirect } from "next/navigation";
-import { Agency, Plan, Prisma, Role, SubAccount, User } from "@prisma/client";
+import { Agency, Lane, Plan, Prisma, Role, SubAccount, User } from "@prisma/client";
 import { clerkClient } from "@clerk/nextjs";
 import { v4 } from "uuid"
 import { CreateMediaType } from "./types";
@@ -570,4 +570,24 @@ export const deletePipeline = async (pipelineId: string) => {
     where: { id: pipelineId },
   })
   return response
+}
+
+export const updateLanesOrder = async (lanes: Lane[]) => {
+  try {
+    const updateTrans = lanes.map((lane) =>
+      db.lane.update({
+        where: {
+          id: lane.id,
+        },
+        data: {
+          order: lane.order,
+        },
+      })
+    )
+
+    await db.$transaction(updateTrans)
+    console.log('🟢 Done reordered 🟢')
+  } catch (error) {
+    console.log(error, 'ERROR UPDATE LANES ORDER')
+  }
 }
