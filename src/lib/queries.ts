@@ -7,6 +7,8 @@ import { Agency, Lane, Plan, Prisma, Role, SubAccount, Tag, Ticket, User } from 
 import { clerkClient } from "@clerk/nextjs";
 import { v4 } from "uuid"
 import { CreateMediaType } from "./types";
+import { FunnelFormSchema } from "@/components/forms/FunnelForm";
+import { z } from "zod";
 
 export const getAuthUserDetails = async () => {
 
@@ -808,4 +810,22 @@ export const getFunnels = async (subaccountId: string) => {
   })
 
   return funnels
+}
+
+export const upsertFunnel = async (
+  subaccountId: string,
+  funnel: z.infer<typeof FunnelFormSchema> & { liveProducts: string },
+  funnelId: string
+) => {
+  const response = await db.funnel.upsert({
+    where: { id: funnelId },
+    update: funnel,
+    create: {
+      ...funnel,
+      id: funnelId || v4(),
+      subAccountId: subaccountId,
+    },
+  })
+
+  return response
 }
