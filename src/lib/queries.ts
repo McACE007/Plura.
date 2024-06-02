@@ -859,3 +859,9 @@ export const upsertFunnelPage = async (
   revalidatePath(`/subaccount/${subaccountId}/funnels/${funnelId}`, 'page')
   return response
 }
+
+export const deleteFunnelPage = async (funnelPageId: string) => {
+  const response = await db.funnelPage.delete({ where: { id: funnelPageId } })
+
+  return response
+}
