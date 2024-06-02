@@ -54,7 +54,7 @@ export default function InfoBar({ notifications, subAccountId, className, role }
                   {(role === "AGENCY_OWNER" || role === "AGENCY_ADMIN") && (
                     <Card className="flex items-center justify-between p-4">
                       Current Subaccount
-                      <Switch onChangeCapture={handleClick} />
+                      <Switch onCheckedChange={handleClick} />
                     </Card>
                   )}
                 </SheetDescription>
