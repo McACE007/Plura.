@@ -10,6 +10,7 @@ import { Card } from "../ui/card";
 import { Switch } from "../ui/switch";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { ModeToggle } from "./mode-toggle";
+import { Separator } from "../ui/separator";
 
 type Props = {
   notifications: NotificationWithUser | [];
@@ -45,9 +46,10 @@ export default function InfoBar({ notifications, subAccountId, className, role }
                 <Bell size={17} />
               </div>
             </SheetTrigger>
-            <SheetContent className="mt-4 mr-4 flex flex-col" showX={false}>
+            <SheetContent className="mt-4 mr-4 pr-4 overflow-auto" showX={false}>
               <SheetHeader className="text-left">
                 <SheetTitle>Notifications</SheetTitle>
+                <Separator />
                 <SheetDescription>
                   {(role === "AGENCY_OWNER" || role === "AGENCY_ADMIN") && (
                     <Card className="flex items-center justify-between p-4">
@@ -59,7 +61,7 @@ export default function InfoBar({ notifications, subAccountId, className, role }
               </SheetHeader>
 
               {allNotifications?.map(notification => (
-                <div key={notification.id} className="flex flex-col gap-y-2 overflow-x-scroll text-ellipsis">
+                <div key={notification.id} className="flex mt-4 overflow-auto text-ellipsis">
                   <div className="flex gap-2">
                     <Avatar>
                       <AvatarImage src={notification.User.avatarUrl} alt="Profile Picture" />
