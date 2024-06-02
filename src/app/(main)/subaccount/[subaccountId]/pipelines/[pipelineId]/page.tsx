@@ -6,6 +6,7 @@ import { redirect } from "next/navigation";
 import PipelineInfoBar from "../_components/PipelineInfoBar";
 import PipelineSettings from "../_components/PipelineSettings";
 import PipelineView from "../_components/PipelineView";
+import BlurPage from "@/components/global/BlurPage";
 
 type Props = {
   params: {
@@ -26,35 +27,37 @@ export default async function PipelinePage({ params }: Props) {
   const lanes = (await getLanesWithTicketAndTags(params.pipelineId)) as LaneDetail[]
 
   return (
-    <Tabs className="w-full" defaultValue="view">
-      <TabsList className="bg-transparent border-b-2 h-16 w-full justify-between mb-4">
-        <PipelineInfoBar pipelineId={params.pipelineId} subaccountId={params.subaccountId} pipelines={pipelines} />
-        <div>
-          <TabsTrigger value="view">
-            Pipeline View
-          </TabsTrigger>
+    <BlurPage>
+      <Tabs className="w-full" defaultValue="view">
+        <TabsList className="bg-transparent border-b-2 h-16 w-full justify-between mb-4">
+          <PipelineInfoBar pipelineId={params.pipelineId} subaccountId={params.subaccountId} pipelines={pipelines} />
+          <div>
+            <TabsTrigger value="view">
+              Pipeline View
+            </TabsTrigger>
 
-          <TabsTrigger value="settings">
-            Settings
-          </TabsTrigger>
-        </div>
-      </TabsList>
+            <TabsTrigger value="settings">
+              Settings
+            </TabsTrigger>
+          </div>
+        </TabsList>
 
-      <TabsContent value="view">
-        <PipelineView
-          lanes={lanes}
-          pipelineDetails={pipelineDetails}
-          pipelineId={params.pipelineId}
-          subaccountId={params.subaccountId}
-          updateLanesOrder={updateLanesOrder}
-          updateTicketsOrder={updateTicketsOrder}
-        />
-      </TabsContent>
+        <TabsContent value="view">
+          <PipelineView
+            lanes={lanes}
+            pipelineDetails={pipelineDetails}
+            pipelineId={params.pipelineId}
+            subaccountId={params.subaccountId}
+            updateLanesOrder={updateLanesOrder}
+            updateTicketsOrder={updateTicketsOrder}
+          />
+        </TabsContent>
 
-      <TabsContent value="settings">
-        <PipelineSettings pipelineId={params.pipelineId} subaccountId={params.subaccountId} pipelines={pipelines} />
-      </TabsContent>
+        <TabsContent value="settings">
+          <PipelineSettings pipelineId={params.pipelineId} subaccountId={params.subaccountId} pipelines={pipelines} />
+        </TabsContent>
 
-    </Tabs>
+      </Tabs>
+    </BlurPage>
   )
 }

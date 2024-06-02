@@ -5,6 +5,7 @@ import Link from 'next/link'
 import React from 'react'
 import FunnelSettings from './_components/FunnelSettings'
 import FunnelSteps from './_components/FunnelSteps'
+import BlurPage from "@/components/global/BlurPage";
 
 type Props = {
   params: { funnelId: string; subaccountId: string };
@@ -16,7 +17,7 @@ export default async function FunnelPage({ params }: Props) {
   if (!funnelPages) return redirect(`/subaccount/${params.subaccountId}/funnels`)
 
   return (
-    <>
+    <BlurPage>
       <Link
         href={`/subaccount/${params.subaccountId}/funnels`}
         className="flex justify-between gap-4 mb-4 text-muted-foreground"
@@ -47,6 +48,6 @@ export default async function FunnelPage({ params }: Props) {
           />
         </TabsContent>
       </Tabs>
-    </>
+    </BlurPage>
   )
 }

@@ -13,6 +13,7 @@ import { Contact, SubAccount, Ticket } from '@prisma/client'
 import format from 'date-fns/format'
 import React from 'react'
 import CraeteContactButton from './_components/CreateContactButton'
+import BlurPage from '@/components/global/BlurPage'
 
 type Props = {
   params: { subaccountId: string };
@@ -61,7 +62,7 @@ export default async function ContactsPage({ params }: Props) {
     return amt.format(laneAmt)
   }
   return (
-    <>
+    <BlurPage>
       <h1 className="text-4xl p-4">Contacts</h1>
       <CraeteContactButton subaccountId={params.subaccountId} />
       <Table>
@@ -101,6 +102,6 @@ export default async function ContactsPage({ params }: Props) {
           ))}
         </TableBody>
       </Table>
-    </>
+    </BlurPage>
   )
 }

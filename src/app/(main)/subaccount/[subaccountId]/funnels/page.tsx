@@ -4,6 +4,7 @@ import DataTable from './_components/DataTable'
 import { Plus } from 'lucide-react'
 import { columns } from './_components/Columns'
 import FunnelForm from '@/components/forms/FunnelForm'
+import BlurPage from '@/components/global/BlurPage'
 
 type Props = {
   params: { subaccountId: string };
@@ -15,19 +16,21 @@ export default async function FunnelsPage({ params }: Props) {
   if (!funnels) return null
 
   return (
-    <DataTable
-      actionButtonText={
-        <>
-          <Plus size={15} />
-          Create Funnel
-        </>
-      }
-      modalChildren={
-        <FunnelForm subAccountId={params.subaccountId}></FunnelForm>
-      }
-      filterValue="name"
-      columns={columns}
-      data={funnels}
-    />
+    <BlurPage>
+      <DataTable
+        actionButtonText={
+          <>
+            <Plus size={15} />
+            Create Funnel
+          </>
+        }
+        modalChildren={
+          <FunnelForm subAccountId={params.subaccountId}></FunnelForm>
+        }
+        filterValue="name"
+        columns={columns}
+        data={funnels}
+      />
+    </BlurPage>
   )
 }
