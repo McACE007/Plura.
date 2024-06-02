@@ -73,3 +73,5 @@ export const currencyNumberRegex = /^\d+(\.\d{1,2})?$/
 export type FunnelsForSubAccount = Prisma.PromiseReturnType<
   typeof getFunnels
 >[0]
+
+export type UpsertFunnelPage = Prisma.FunnelPageCreateWithoutFunnelInput
