@@ -6,9 +6,10 @@ import { redirect } from "next/navigation";
 import { Agency, Lane, Plan, Prisma, Role, SubAccount, Tag, Ticket, User } from "@prisma/client";
 import { clerkClient } from "@clerk/nextjs";
 import { v4 } from "uuid"
-import { CreateMediaType } from "./types";
+import { CreateMediaType, UpsertFunnelPage } from "./types";
 import { FunnelFormSchema } from "@/components/forms/FunnelForm";
 import { z } from "zod";
+import { revalidatePath } from "next/cache";
 
 export const getAuthUserDetails = async () => {
 
@@ -827,5 +828,34 @@ export const upsertFunnel = async (
     },
   })
 
+  return response
+}
+
+export const upsertFunnelPage = async (
+  subaccountId: string,
+  funnelPage: UpsertFunnelPage,
+  funnelId: string
+) => {
+  if (!subaccountId || !funnelId) return
+  const response = await db.funnelPage.upsert({
+    where: { id: funnelPage.id || '' },
+    update: { ...funnelPage },
+    create: {
+      ...funnelPage,
+      content: funnelPage.content
+        ? funnelPage.content
+        : JSON.stringify([
+          {
+            content: [],
+            id: '__body',
+            name: 'Body',
+            styles: { backgroundColor: 'white' },
+            type: '__body',
+          },
+        ]),
+      funnelId,
+    },
+  })
+  revalidatePath(`/subaccount/${subaccountId}/funnels/${funnelId}`, 'page')
   return response
 }
