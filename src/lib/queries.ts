@@ -292,7 +292,7 @@ export const getNotificationAndUser = async (agencyId: string) => {
   try {
     const response = await db.notification.findMany({
       where: {
-        id: agencyId
+        agencyId: agencyId
       },
       include: {
         User: true
