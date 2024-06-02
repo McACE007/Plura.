@@ -794,3 +794,18 @@ export const getFunnel = async (funnelId: string) => {
 
   return funnel
 }
+
+export const getFunnels = async (subaccountId: string) => {
+  const funnels = await db.funnel.findMany({
+    where: { subAccountId: subaccountId },
+    include: {
+      FunnelPages: {
+        orderBy: {
+          order: 'asc',
+        },
+      },
+    },
+  })
+
+  return funnels
+}
