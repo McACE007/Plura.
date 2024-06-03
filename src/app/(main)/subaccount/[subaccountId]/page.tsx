@@ -120,7 +120,7 @@ const SubaccountPageId = async ({ params, searchParams }: Props) => {
                           Total Carts Opened
                           <div className="flex gap-2">
                             <ShoppingCart className="text-rose-700" />
-                            {sessions.length}
+                            {0}
                           </div>
                         </div>
                       )}
@@ -129,7 +129,7 @@ const SubaccountPageId = async ({ params, searchParams }: Props) => {
                           Won Carts
                           <div className="flex gap-2">
                             <ShoppingCart className="text-emerald-700" />
-                            {totalClosedSessions.length}
+                            {0}
                           </div>
                         </div>
                       )}
