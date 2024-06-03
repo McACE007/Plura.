@@ -1,8 +1,15 @@
-'use client'
+import { ContactUserFormSchema } from './ContactUserForm'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { useEffect } from 'react'
+import React from 'react'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from '../ui/card'
 import {
   Form,
   FormControl,
@@ -10,93 +17,40 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from '@/components/ui/form'
-import {
-  Card,
-  CardHeader,
-  CardTitle,
-  CardDescription,
-  CardContent,
-} from '@/components/ui/card'
+} from '../ui/form'
 import { Input } from '../ui/input'
 import { Button } from '../ui/button'
 import Loading from '../global/Loading'
-import { saveActivityLogsNotification, upsertContact } from '@/lib/queries'
-import { toast } from '../ui/use-toast'
-import { useRouter } from 'next/navigation'
-import { useModal } from '@/providers/ModalProvider'
 
 type Props = {
-  subaccountId: string;
+  title: string
+  subTitle: string
+  apiCall: (values: z.infer<typeof ContactUserFormSchema>) => any
 }
 
-export const ContactUserFormSchema = z.object({
-  name: z.string().min(1),
-  email: z.string().email(),
-})
-
-export default function ContactUserForm({ subaccountId }: Props) {
-  const { setClose, data } = useModal()
-  const router = useRouter()
+const ContactForm = ({ apiCall, subTitle, title }: Props) => {
   const form = useForm<z.infer<typeof ContactUserFormSchema>>({
-    mode: "onChange",
+    mode: 'onChange',
     resolver: zodResolver(ContactUserFormSchema),
     defaultValues: {
       name: '',
       email: '',
-    }
+    },
   })
-
   const isLoading = form.formState.isLoading
 
-  useEffect(() => {
-    if (data.contact) {
-      form.reset(data.contact)
-    }
-  }, [data, form])
-
-  const handleSubmit = async (
-    values: z.infer<typeof ContactUserFormSchema>
-  ) => {
-    try {
-      const response = await upsertContact({
-        email: values.email,
-        subAccountId: subaccountId,
-        name: values.name,
-      })
-      await saveActivityLogsNotification({
-        agencyId: undefined,
-        description: `Updated a contact | ${response?.name}`,
-        subAccountId: subaccountId,
-      })
-      toast({
-        title: 'Success',
-        description: 'Saved funnel details',
-      })
-      setClose()
-      router.refresh()
-    } catch (error) {
-      toast({
-        variant: 'destructive',
-        title: 'Oppse!',
-        description: 'Could not save funnel details',
-      })
-    }
-  }
+  //CHALLENGE: We want to create tags for each leads that comes from the form
 
   return (
-    <Card className=" w-full">
+    <Card className="max-w-[500px] w-[500px]">
       <CardHeader>
-        <CardTitle>Contact Info</CardTitle>
-        <CardDescription>
-          You can assign tickets to contacts and set a value for each contact in
-          the ticket.
-        </CardDescription>
+        <CardTitle>{title}</CardTitle>
+        <CardDescription>{subTitle}</CardDescription>
       </CardHeader>
       <CardContent>
         <Form {...form}>
           <form
-            onSubmit={form.handleSubmit(handleSubmit)}
+            onSubmit={form.handleSubmit(apiCall)}
             className="flex flex-col gap-4"
           >
             <FormField
@@ -134,17 +88,12 @@ export default function ContactUserForm({ subaccountId }: Props) {
                 </FormItem>
               )}
             />
-
             <Button
               className="mt-4"
               disabled={isLoading}
               type="submit"
             >
-              {form.formState.isSubmitting ? (
-                <Loading />
-              ) : (
-                'Save Contact Details!'
-              )}
+              {form.formState.isSubmitting ? <Loading /> : 'Get a free quote!'}
             </Button>
           </form>
         </Form>
@@ -152,3 +101,5 @@ export default function ContactUserForm({ subaccountId }: Props) {
     </Card>
   )
 }
+
+export default ContactForm
