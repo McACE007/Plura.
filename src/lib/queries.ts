@@ -885,3 +885,16 @@ export const getDomainContent = async (subDomainName: string) => {
   })
   return response
 }
+
+export const getPipelines = async (subaccountId: string) => {
+  const response = await db.pipeline.findMany({
+    where: { subAccountId: subaccountId },
+    include: {
+      Lane: {
+        include: { Tickets: true },
+      },
+    },
+  })
+  return response
+}
+
