@@ -193,30 +193,7 @@ const SubaccountPageId = async ({ params, searchParams }: Props) => {
                     </TableRow>
                   </TableHeader>
                   <TableBody className="font-medium truncate">
-                    {totalClosedSessions
-                      ? totalClosedSessions.map((session) => (
-                        <TableRow key={session.id}>
-                          <TableCell>
-                            {session.customer_details?.email || '-'}
-                          </TableCell>
-                          <TableCell>
-                            <Badge className="bg-emerald-500 dark:text-black">
-                              Paid
-                            </Badge>
-                          </TableCell>
-                          <TableCell>
-                            {new Date(session.created).toUTCString()}
-                          </TableCell>
-
-                          <TableCell className="text-right">
-                            <small>{currency}</small>{' '}
-                            <span className="text-emerald-500">
-                              {session.amount_total}
-                            </span>
-                          </TableCell>
-                        </TableRow>
-                      ))
-                      : 'No Data'}
+                    No Data
                   </TableBody>
                 </Table>
               </CardHeader>
